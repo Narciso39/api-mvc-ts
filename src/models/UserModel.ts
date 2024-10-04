@@ -1,6 +1,5 @@
 import db from "src/config/db";
 
-
 export interface User {
   id: number;
   firstName: string;
@@ -20,7 +19,15 @@ class UserModel implements User {
     this.age = age;
   }
 
-  
+  static async getUsers() {
+    try {
+      const rows = await db.query("SELECT * FROM user");
+      return rows;
+    } catch (e) {
+      console.error(e);
+      throw new Error("Database query failed");
+    }
+  }
 }
 
 export default UserModel;

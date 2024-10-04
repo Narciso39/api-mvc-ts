@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
+import UserController from "src/controllers/UserController";
 export const route = express.Router();
 
-route.get("/a", (req: Request, res: Response) => {
-  res.send("deu certo");
-});
+
+route.get("/all", UserController.getAllUser);
