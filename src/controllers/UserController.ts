@@ -1,4 +1,4 @@
-import UserModel from "src/models/UserModel";
+import UserModel from "../models/UserModel";
 import { Request, Response, NextFunction } from "express";
 
 class UserController {
@@ -6,6 +6,7 @@ class UserController {
     try {
       const result = await UserModel.getUsers();
       res.json(result);
+      console.log("chegou a requisição");
     } catch (e) {
       console.error("Error fetching users:", e);
       res.status(500).send("Internal Server Error");

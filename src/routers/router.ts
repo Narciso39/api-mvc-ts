@@ -1,6 +1,8 @@
-import express, { Request, Response, NextFunction } from "express";
-import UserController from "src/controllers/UserController";
-export const route = express.Router();
+import { Router } from "express";
+import UserController from "../controllers/UserController"; // Verifique o caminho
 
+const router = Router();
 
-route.get("/all", UserController.getAllUser);
+router.get("/all", UserController.getAllUser);
+
+export default router;
