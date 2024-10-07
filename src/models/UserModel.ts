@@ -51,7 +51,9 @@ class UserModel {
         [email, password, name]
       );
       return addUser;
-    } catch (e) {}
+    } catch (e) {
+      throw new Error("Data base query failed");
+    }
   }
 }
 
