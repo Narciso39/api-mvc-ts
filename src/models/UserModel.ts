@@ -1,4 +1,3 @@
-import e from "express";
 import db from "../config/db";
 import { RowDataPacket } from "mysql2";
 
@@ -64,7 +63,7 @@ class UserModel {
       );
       return editUser;
     } catch (e) {
-      
+      throw new Error("Data base query failed");
     }
 
   }
