@@ -1,3 +1,4 @@
+import e from "express";
 import db from "../config/db";
 import { RowDataPacket } from "mysql2";
 
@@ -54,6 +55,18 @@ class UserModel {
     } catch (e) {
       throw new Error("Data base query failed");
     }
+  }
+
+  static async edit(id: number, email: string, password: string, name: string) {
+    try {
+      const [editUser] = await db.query("UPDATE user SET email = ?, password = ?, name = ? WHERE id = ?",
+        [email, password, name, id]
+      );
+      return editUser;
+    } catch (e) {
+      
+    }
+
   }
 }
 

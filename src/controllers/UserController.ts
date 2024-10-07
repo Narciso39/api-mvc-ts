@@ -32,6 +32,25 @@ class UserController {
       res.status(500).send("Erro Interno do Servidor");
     }
   }
+
+  static async editUser(req: Request, res: Response): Promise<any> {
+    try {
+      const id:number = parseInt(req.params.id);
+      const {email, password, name} = req.body;
+      const result = await UserModel.edit(id, email, password, name);
+
+      if(result) {
+        res.status(204).send();
+      } else {
+        res.status(404).json({ message: 'Usuário não encontrado' });
+      }
+    } catch (e) {
+      console.error('Erro ao editar o usuário', e);
+      res.status(500).send('Erro');
+    }
+
+
+  }
 }
 
 export default UserController;
