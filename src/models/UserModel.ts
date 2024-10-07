@@ -3,44 +3,55 @@ import { RowDataPacket } from "mysql2";
 
 export interface User {
   id: number;
-  firstName: string;
-  lastName: string;
-  age: number;
+  email: string;
+  name: string;
 }
 
 interface UserRow extends RowDataPacket {
   id: number;
-  firstname: string;
-  lastname: string;
-  years: number;
+  email: string;
+  password: string;
+  name: string;
 }
 
 class UserModel {
   id: number;
-  firstName: string;
-  lastName: string;
-  age: number;
+  email: string;
+  password: string;
+  name: string;
 
-  constructor(id: number, firstName: string, lastName: string, age: number) {
+  constructor(id: number, email: string, password: string, name: string) {
     this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.age = age;
+    this.email = email;
+    this.password = password;
+    this.name = name;
   }
 
   static async getUsers(): Promise<User[]> {
     try {
-      const [rows]: [UserRow[], any] = await db.query<UserRow[]>("SELECT * FROM user");
+      const [rows]: [UserRow[], any] = await db.query<UserRow[]>(
+        "SELECT * FROM user"
+      );
       return rows.map((row) => ({
         id: row.id,
-        firstName: row.firstname,
-        lastName: row.lastname,
-        age: row.years,
+        email: row.email,
+        password: row.password,
+        name: row.name,
       }));
     } catch (e) {
       console.error("Error fetching users:", e);
       throw new Error("Database query failed");
     }
+  }
+
+  static async addNewUser(email: string, password: string, name: string) {
+    try {
+      const [addUser] = await db.query(
+        "INSERT INTO user (email, password, name) VALUES (?, ?, ?)",
+        [email, password, name]
+      );
+      return addUser;
+    } catch (e) {}
   }
 }
 
