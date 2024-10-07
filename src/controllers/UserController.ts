@@ -2,7 +2,7 @@ import UserModel from "../models/UserModel";
 import { Request, Response, NextFunction } from "express";
 
 class UserController {
-  static async getAllUser(req: Request, res: Response) {
+  static async getAllUser(req: Request, res: Response): Promise<any> {
     try {
       const result = await UserModel.getUsers();
       res.json(result);
