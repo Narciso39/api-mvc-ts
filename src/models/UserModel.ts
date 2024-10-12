@@ -32,12 +32,7 @@ class UserModel {
       const [rows]: [UserRow[], any] = await db.query<UserRow[]>(
         "SELECT * FROM user"
       );
-      return rows.map((row) => ({
-        id: row.id,
-        email: row.email,
-        password: row.password,
-        name: row.name,
-      }));
+      return rows;
     } catch (e) {
       console.error("Error fetching users:", e);
       throw new Error("Database query failed");

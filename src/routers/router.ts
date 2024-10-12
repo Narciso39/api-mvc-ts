@@ -1,13 +1,21 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController"; // Verifique o caminho
 
-const router = Router();
+// rotas de  usuários
+class UserRoutes {
+  public router: Router;
 
-router.get("/api/all", UserController.getAllUser);
+  constructor() {
+    this.router = Router();
+    this.routes();
+  }
 
-router.post("/api/add", UserController.addUser);
+  private routes(): void {
+    this.router.get("/api/userall", UserController.getAllUser);
+    this.router.post("/api/addUser", UserController.addUser);
+    this.router.post("/api/editUser/:id", UserController.editUser);
+    this.router.post("/api/destroyUser/:id", UserController.deleteUser);
+  }
+}
 
-router.post("/api/edit/:id", UserController.editUser);
-
-router.post("/api/destroy/:id", UserController.deleteUser);
-export default router;
+export default new UserRoutes().router;
