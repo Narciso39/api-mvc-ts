@@ -35,21 +35,34 @@ class UserController {
 
   static async editUser(req: Request, res: Response): Promise<any> {
     try {
-      const id:number = parseInt(req.params.id);
-      const {email, password, name} = req.body;
+      const id: number = parseInt(req.params.id);
+      const { email, password, name } = req.body;
       const result = await UserModel.edit(id, email, password, name);
 
-      if(result) {
+      if (result) {
         res.status(204).send();
       } else {
-        res.status(404).json({ message: 'Usuário não encontrado' });
+        res.status(404).json({ message: "Usuário não encontrado" });
       }
     } catch (e) {
-      console.error('Erro ao editar o usuário', e);
-      res.status(500).send('Erro');
+      console.error("Erro ao editar o usuário", e);
+      res.status(500).send("Erro");
     }
+  }
 
-
+  static async deleteUser(req: Request, res: Response): Promise<any> {
+    try {
+      const id: number = parseInt(req.params.id);
+      const result = await UserModel.delete(id);
+      if (result) {
+        res.status(204).send();
+      } else {
+        res.status(404).json({ message: "Usuário não encontrado" });
+      }
+    } catch (e) {
+      console.error("Erro ao deletar o usuário", e);
+      res.status(500).send("Erro");
+    }
   }
 }
 

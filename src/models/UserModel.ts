@@ -58,14 +58,23 @@ class UserModel {
 
   static async edit(id: number, email: string, password: string, name: string) {
     try {
-      const [editUser] = await db.query("UPDATE user SET email = ?, password = ?, name = ? WHERE id = ?",
+      const [editUser] = await db.query(
+        "UPDATE user SET email = ?, password = ?, name = ? WHERE id = ?",
         [email, password, name, id]
       );
       return editUser;
     } catch (e) {
       throw new Error("Data base query failed");
     }
+  }
 
+  static async delete(id: number) {
+    try {
+      const [deleteUser] = await db.query("DELETE FROM user WHERE id = ?", [id]);
+      return deleteUser;
+    } catch (e) {
+      throw new Error("Data base query failed");
+    }
   }
 }
 
