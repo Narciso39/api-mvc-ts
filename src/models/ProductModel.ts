@@ -28,13 +28,15 @@ class ProductModel {
     price: number;
     sku: string;
     stock: number;
+    term: string;
   
-    constructor(id: number, name: string, price: number, sku: string, stock: number) {
+    constructor(id: number, name: string, price: number, sku: string, stock: number, term: string) {
       this.id = id;
       this.name = name;
       this.price = price;
       this.sku = sku;
       this.stock = stock;
+      this.term = term;
     }
 // retorna todos os produtos
   static async selectAll() {
@@ -46,22 +48,23 @@ class ProductModel {
     }
   }
 
-// retorna um os produtos
+// retorna um os produto específico
   static async selectThis(id: number) {
     try {
-      const [rowOfProduct] = await db.query("SELECT * FROM product WHERE id = ?", [id]);
+      const [rowOfProduct] = await db.query("SELECT * FROM products WHERE id = ?", [id]);
       return rowOfProduct;
     } catch (e) {
       throw new Error("Database query failed");
     }
   }
 
-// retorna os produtos da pesquisa
+// retorna os produtos com o nome semelhantes a pesquisa
   static async selectLike(term: string) {
     try {
-      const [rowOfThisProduct] = await db.query("SELECT * FROM procut WHERE name LIKE ?", [`%${term}%`]);
+      const [rowOfThisProduct] = await db.query("SELECT * FROM products WHERE name LIKE ?", [`%${term}%`]);
       return rowOfThisProduct;
     } catch (e) {
+      console.log(e);
       throw new Error("Database query failed");
     }
   }

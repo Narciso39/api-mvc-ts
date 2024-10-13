@@ -18,7 +18,7 @@ import db from "../config/db"; // const que chama o método do mysql2/promise
 //   password: string;
 //   name: string;
 // }
-
+// inicio da model de usuários
 class UserModel {
   id: number;
   email: string;
@@ -32,7 +32,7 @@ class UserModel {
     this.name = name;
   }
 
-  
+// retorna todos os usuários
   static async getUsers() {
     try {
       const [rows] = await db.query(
@@ -44,7 +44,7 @@ class UserModel {
       throw new Error("Database query failed");
     }
   }
-
+// adiciona um novo usuário
   static async addNewUser(email: string, password: string, name: string) {
     try {
       const [insertNewUser] = await db.query(
@@ -57,6 +57,7 @@ class UserModel {
     }
   }
 
+// edita o usuário
   static async edit(id: number, email: string, password: string, name: string) {
     try {
       const [editUser] = await db.query(
@@ -69,6 +70,7 @@ class UserModel {
     }
   }
 
+// deleta o usuário
   static async delete(id: number) {
     try {
       const [deleteUser] = await db.query("DELETE FROM user WHERE id = ?", [id]);

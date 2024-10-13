@@ -12,6 +12,8 @@ class ProductRoutes {
       this.router.post("/add", ProductController.addNewProduct);
       this.router.post("/edit/:id", ProductController.updateProduct);
       this.router.post("/destroy/:id", ProductController.destroyProduct);
+      this.router.get("/:id", ProductController.getProductById);
+      this.router.get("/search", ProductController.getProductBySearch);
     }
   }
 
