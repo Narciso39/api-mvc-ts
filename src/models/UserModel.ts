@@ -1,5 +1,5 @@
 import db from "../config/db";
-import { RowDataPacket } from "mysql2";
+// import { RowDataPacket } from "mysql2";
 
 export interface User {
   id: number;
@@ -7,12 +7,12 @@ export interface User {
   name: string;
 }
 
-interface UserRow extends RowDataPacket {
-  id: number;
-  email: string;
-  password: string;
-  name: string;
-}
+// interface UserRow extends RowDataPacket {
+//   id: number;
+//   email: string;
+//   password: string;
+//   name: string;
+// }
 
 class UserModel {
   id: number;
@@ -27,9 +27,10 @@ class UserModel {
     this.name = name;
   }
 
-  static async getUsers(): Promise<User[]> {
+  
+  static async getUsers() {
     try {
-      const [rows]: [UserRow[], any] = await db.query<UserRow[]>(
+      const [rows] = await db.query(
         "SELECT * FROM user"
       );
       return rows;
@@ -41,11 +42,11 @@ class UserModel {
 
   static async addNewUser(email: string, password: string, name: string) {
     try {
-      const [addUser] = await db.query(
+      const [insertNewUser] = await db.query(
         "INSERT INTO user (email, password, name) VALUES (?, ?, ?)",
         [email, password, name]
       );
-      return addUser;
+      return insertNewUser;
     } catch (e) {
       throw new Error("Data base query failed");
     }

@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
-import UserRoutes from "./routers/router";
+import router from "./routers/routes";
 
 const app = express();
 
@@ -13,6 +13,6 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
-app.use(UserRoutes);
+app.use(router);
 
 export default app;
