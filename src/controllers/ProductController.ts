@@ -38,13 +38,7 @@ class ProductController {
     try {
       const id: number = parseInt(req.params.id);
       const { name, price, sku, stock } = req.body;
-      const resultUpdateProduct = await ProductModel.updateProduct(
-        id,
-        name,
-        price,
-        sku,
-        stock
-      );
+      const resultUpdateProduct = await ProductModel.updateProduct(id, name, price, sku, stock);
 
       if (resultUpdateProduct) {
         res.status(204).send();
@@ -53,6 +47,21 @@ class ProductController {
       }
     } catch (e) {
         console.error("Erro ao editar produto:", e);
+        res.status(500).send("Erro Interno do Servidor");
+    }
+  }
+
+  static async destroyProduct(req: Request, res: Response): Promise<void> {
+    try {
+        const id: number = parseInt(req.params.id);
+        const resultUpdateProduct = await ProductModel.deleteProduct(id);
+        if(resultUpdateProduct) {
+            res.status(204).send();
+        } else {
+            res.status(404).json({ message: "produto não encontrado" });
+          }
+    } catch (e) {
+        console.error("Erro ao deletar produto:", e);
         res.status(500).send("Erro Interno do Servidor");
     }
   }

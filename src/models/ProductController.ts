@@ -59,6 +59,15 @@ class ProductModel {
         throw new Error("Database query failed");
     }
   }
+
+  static async deleteProduct(id: number) {
+    try {
+        const [deleteProduct] = await db.query("DELETE FROM products WHERE id = ?", [id]);
+        return deleteProduct;
+    } catch (e) {
+        throw new Error("Database query failed");
+    }
+  }
 }
 
 export default ProductModel;
