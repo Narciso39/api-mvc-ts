@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import ProductModel from "../models/ProductController";
+import ProductModel from "../models/ProductModel";
 
 class ProductController {
   static async getAllProduct(req: Request, res: Response): Promise<void> {
@@ -10,7 +10,7 @@ class ProductController {
       res.status(500).send("Erro Interno do Servidor");
     }
   }
-
+ 
   static async addNewProduct(req: Request, res: Response): Promise<void> {
     try {
       const { name, price, sku, stock } = req.body;

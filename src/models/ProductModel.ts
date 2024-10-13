@@ -1,14 +1,18 @@
-import db from "../config/db";
+import db from "../config/db"; // const que chama o método do mysql2/promise
 // import { RowDataPacket } from "mysql2";
 
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  sku: string;
-  stock: number;
-}
+// export interface Product {
+//   id: number;
+//   name: string;
+//   price: number;
+//   sku: string;
+//   stock: number;
+// }
 
+/* essa interface serve para fazer o map no select de todos os itens da tabela,
+  tinha usado na model de users, porém, está retornando só as row de id, usar caso bugue,
+  em ultimo caso mesmo kkkk
+*/
 // interface ProductRow extends RowDataPacket {
 //     id: number;
 //     name: string;
@@ -17,6 +21,7 @@ export interface Product {
 //     stock: number;
 // }
 
+// ínicio da classe de produtos
 class ProductModel {
     id: number;
     name: string;
@@ -31,7 +36,7 @@ class ProductModel {
       this.sku = sku;
       this.stock = stock;
     }
-  
+// retorna todos os produtos
   static async selectAll() {
     try {
         const [rowsOfProducts] = await db.query("SELECT  * FROM products");
@@ -41,6 +46,27 @@ class ProductModel {
     }
   }
 
+// retorna um os produtos
+  static async selectThis(id: number) {
+    try {
+      const [rowOfProduct] = await db.query("SELECT * FROM product WHERE id = ?", [id]);
+      return rowOfProduct;
+    } catch (e) {
+      throw new Error("Database query failed");
+    }
+  }
+
+// retorna os produtos da pesquisa
+  static async selectLike(term: string) {
+    try {
+      const [rowOfThisProduct] = await db.query("SELECT * FROM procut WHERE name LIKE ?", [`%${term}%`]);
+      return rowOfThisProduct;
+    } catch (e) {
+      throw new Error("Database query failed");
+    }
+  }
+
+// adiciona um novo produto
   static async insertProduct(name: string, price: number, sku: string, stock: number) {
     try {
         const [insertNewProduct] = await db.query("INSERT INTO products (name, price, sku, stock) VALUES (?, ?, ?, ?)", [name, price, sku, stock]);
@@ -51,6 +77,7 @@ class ProductModel {
     }
   }
 
+// atualiza o produto
   static async updateProduct(id: number, name: string, price: number, sku: string, stock: number) {
     try {
         const [editProduct] = await db.query("UPDATE products SET name = ?, price = ?, sku = ?, stock = ? WHERE id = ?", [name, price, sku, stock, id]);
@@ -60,6 +87,7 @@ class ProductModel {
     }
   }
 
+// deleta o produto
   static async deleteProduct(id: number) {
     try {
         const [deleteProduct] = await db.query("DELETE FROM products WHERE id = ?", [id]);
@@ -69,5 +97,6 @@ class ProductModel {
     }
   }
 }
+
 
 export default ProductModel;

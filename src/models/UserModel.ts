@@ -1,12 +1,17 @@
-import db from "../config/db";
+import db from "../config/db"; // const que chama o método do mysql2/promise
 // import { RowDataPacket } from "mysql2";
 
-export interface User {
-  id: number;
-  email: string;
-  name: string;
-}
+// auxilia a userRow 
+// export interface User {
+//   id: number;
+//   email: string;
+//   name: string;
+// }
 
+/* essa interface serve para fazer o map no select de todos os itens da tabela,
+  tinha usado na model de users, porém, está retornando só as row de id, usar caso bugue,
+  em ultimo caso mesmo kkkk
+*/
 // interface UserRow extends RowDataPacket {
 //   id: number;
 //   email: string;
