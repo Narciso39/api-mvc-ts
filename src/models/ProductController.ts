@@ -32,7 +32,7 @@ class ProductModel {
       this.stock = stock;
     }
   
-  static async getAll() {
+  static async selectAll() {
     try {
         const [rowsOfProducts] = await db.query("SELECT  * FROM products");
         return rowsOfProducts;
@@ -41,12 +41,21 @@ class ProductModel {
     }
   }
 
-  static async addProduct(name: string, price: number, sku: string, stock: number) {
+  static async insertProduct(name: string, price: number, sku: string, stock: number) {
     try {
         const [insertNewProduct] = await db.query("INSERT INTO products (name, price, sku, stock) VALUES (?, ?, ?, ?)", [name, price, sku, stock]);
         return insertNewProduct;
     } catch (e) {
         console.error("Erro ao inserir produto:", e);
+        throw new Error("Database query failed");
+    }
+  }
+
+  static async updateProduct(id: number, name: string, price: number, sku: string, stock: number) {
+    try {
+        const [editProduct] = await db.query("UPDATE products SET name = ?, price = ?, sku = ?, stock = ? WHERE id = ?", [name, price, sku, stock, id]);
+        return editProduct;
+    } catch (e) {
         throw new Error("Database query failed");
     }
   }

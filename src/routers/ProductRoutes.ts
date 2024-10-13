@@ -10,6 +10,7 @@ class ProductRoutes {
     private routes(): void {
       this.router.get("/", ProductController.getAllProduct);
       this.router.post("/add", ProductController.addNewProduct);
+      this.router.post("/edit/:id", ProductController.updateProduct);
     }
   }
 
